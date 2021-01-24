@@ -1,7 +1,7 @@
 import React, { useState }  from "react";
 import axios from 'axios';
 
-const Login = () => {
+const Login = (props) => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
   const [username, setUsername] = useState("");
@@ -13,12 +13,16 @@ const Login = () => {
       then(res => {
         console.log(res);
         localStorage.setItem("token", res.data.payload);
-        //props.history.push("/friendslist");
+        props.history.push("/bubblepage");
       })
       .catch(err => {
         console.log(err);
       });
   };
+  const logout = () => {
+    localStorage.removeItem("token");
+    alert("You've Logged Out!");
+  }
   return (
     <>
       <div>
@@ -40,6 +44,7 @@ const Login = () => {
           <div>Loading ...</div>
         }
       </form>
+      <button onClick={logout}>Log out</button>
     </div>
     </>
   );
